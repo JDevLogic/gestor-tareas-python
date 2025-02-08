@@ -1,8 +1,23 @@
 # Gestor de tareas en Python
 # Autor: Jonathan
 
+import json
+
+# Funcion para cargar las tareas desde el archivo JSON
+def cargar_tareas():
+    try:
+        with open("tareas.json","r") as archivo:
+            return json.load(archivo)      # Carga la lista de tareas archivo JSON
+    except FileNotFoundError:
+        return []   # Si no existe el archivo, devuelva una lista vacia 
+
+# Funcion para que guarde las tareas en el archivo JSON
+def guardar_tareas():
+    with open("tareas.json","w") as archivo:
+        json.dump(tareas, archivo)
+
 # Lista para almacenar las tareas 
-tareas = []
+tareas = cargar_tareas()
 
 # Bucle principal del programa 
 while True:
@@ -17,7 +32,9 @@ while True:
     if opcion == "1":
         nueva_tarea = input("Escribe la nueva tarea: ")
         tareas.append(nueva_tarea)
+        guardar_tareas()
         print(f"Tarea añadida: {nueva_tarea}")
+    
     elif opcion == "2":
         if tareas:
             print("\n Lista de tareas")
@@ -36,6 +53,7 @@ while True:
 
             if 0<= num < len(tareas):
                 tareas_completada = tareas.pop(num)
+                guardar_tareas()
                 print (f"Tarea completada: {tareas_completada}")
             else:
                 print("Numero invalido.")
