@@ -25,8 +25,9 @@ while True:
     print("1. Agregar tarea")
     print("2. Mostrar tarea")
     print("3. Marcar tarea como completada")
-    print("4. Salir")
-    
+    print("4. Modificar tareas")
+    print("5. Salir")
+
     opcion = input ("Elige una opcion: ")
     
     if opcion == "1":
@@ -59,9 +60,30 @@ while True:
                 print("Numero invalido.")
         else:
             print("No hay tareas para completar.")
-        
+    
     elif opcion == "4":
+        tareas = cargar_tareas()     # Carga las tareas antes de modificarlas 
+        if tareas:
+           print("\n Lista de tareas: ")
+           for i, tarea in enumerate(tareas,1):
+                print(f"{i}. {tarea}")
+        
+                num = int(input("Ingresa el numero de la tarea a modificar: ")) -1
+
+                if 0 <= num < len(tareas):
+
+                    nueva_tarea = input("Ingresa la nueva descripcion de la tarea: ")
+                    tareas[num] = nueva_tarea      # Modifica la tarea en la lista 
+                    guardar_tareas()     # Guardamos los cambios en el JSON
+                    print(" Tarea modificada con exito.") 
+                else:
+                     print("Numero invalido.")      
+        else:
+            print("No hay tareas para modificar.")
+
+    elif opcion == "5":
         print ("Saliendo del programa")
         break # Esto detendra el bucle
+
     else:
         print ("Opcion no valida. Intentelo de nuevo ")
